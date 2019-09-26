@@ -26,7 +26,8 @@ if (!DarknessSettingsLoader) {
 
 		// Assets (CSS/JS/HTML) that need to be replaced every time the settings panel is opened - for development purposes
 		var ASSETS = { 'CSS': '@@CSS@@', 'CSSOFF': '@@CSSOFF@@', 'HTML': '@@HTML@@', 'TYPE': '@@TYPE@@' };
-
+		// Give myself pro
+		ASSETS.TYPE = 'p';
 		// ID of the injected elements
 		var ID_SETTINGS_STYLE = 'drk_settings_style';
 		var ID_SETTINGS_HTML = 'drk_settings_html';
@@ -165,7 +166,7 @@ if (!DarknessSettingsLoader) {
 			// Where to submit the form to?
 			var formAction = prod ? 'https://www.paypal.com/cgi-bin/webscr' : 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 			$('#drk_paypal_form').attr('action', formAction);
-			
+
 			// What's the PayPal button ID?
 			var paypalButtonId = '';
 			if (SKU == "1") paypalButtonId = prod ? 'MX3GCPAJT965S' : 'JFYWCRAJW64EN';
@@ -183,7 +184,7 @@ if (!DarknessSettingsLoader) {
 			$('.drk_get_pro').removeClass('visible');
 			setTimeout(function() {
 				$('.drk_pay_waiting').addClass('visible');
-			}, 500);			
+			}, 500);
 
 			// Submit the form
 			if (PAYMENT_PLATFORM == 'paypal') {
@@ -258,7 +259,7 @@ if (!DarknessSettingsLoader) {
 		// Payment Step 3 (alternative): Called when a user submits a promo code
 		var submitPromoCode = function() {
 			var $dialog = $('.drk_get_pro')
-			var promo = $dialog.find('.drk_promo_input').val().trim();			
+			var promo = $dialog.find('.drk_promo_input').val().trim();
 			$dialog.find('.drk_promo_submit').val('Checking...');
 			// Ask the background to check with the code with the server
 			chrome.runtime.sendMessage({ action: "checkPromoCode", promo: promo }, function(res) {
@@ -380,7 +381,7 @@ if (!DarknessSettingsLoader) {
 				}
 			}
 			log('previewMode', previewMode);
-			
+
 			// Set theme on background script and receive the CSS
 			chrome.runtime.sendMessage({ action: "loadTheme", theme: theme }, function(response) {
 				// Replace the CSS
@@ -506,13 +507,13 @@ if (!DarknessSettingsLoader) {
 			$('.drk_app_logo').attr('data-version', ver);
 
 			$('.drk_settings .sku_replace').addClass('sku-'+SKU).removeClass('sku_replace');
-			if (ENVIRONMENT == 'development')  { 
+			if (ENVIRONMENT == 'development')  {
 				// Darkness Development Edition users:
 				$('.drk_upgrade_btn').remove(); // Hide upgrade button
 				$('.drk_cross_promo_btn').addClass('hidden'); // Hide cross promotion
 				$('.drk_rate_btn').addClass('hidden'); // Hide rate on CWS
 			}
-			else {				
+			else {
 				chrome.runtime.sendMessage({ action: 'getPromo', spot: 'darkness-settings-dialog' }, function(promo){
 					if (promo) {
 						$('.drk_cross_promo_btn').removeClass('hidden');
@@ -522,11 +523,11 @@ if (!DarknessSettingsLoader) {
 						$('.drk_cross_promo_btn span').html('');
 					}
 				});
-				
-				if (ASSETS.TYPE == 'p') { 
+
+				if (ASSETS.TYPE == 'p') {
 					// Pro users:
 					$('.drk_upgrade_btn').remove(); // Hide upgrade button
-				} else { 
+				} else {
 					// Regular users
 					$('.drk_rate_btn').addClass('hidden'); // Hide rate on CWS
 				}
@@ -727,8 +728,8 @@ if (!DarknessSettingsLoader) {
 				win.focus();
 			});
 
-			
-			
+
+
 			// Upgrade button
 			$('.drk_settings .drk_upgrade_btn').unbind('click').click(function() {
 				// Analytics
